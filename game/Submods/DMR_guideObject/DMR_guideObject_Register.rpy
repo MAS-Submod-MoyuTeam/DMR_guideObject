@@ -3,9 +3,10 @@ init -990 python:
         author="P",
         name="DMR_guideObject",
         description="DMR 示例约会",
-        version='0.0.1',
+        version='0.0.2',
         dependencies={'DokiMonikaReworkCore':('0.0.1','2.0.0')}
     )
+    # dependencies 表示这个模组强制需要DMR作为前置模组
 
 init -900 python:
 ##################################################

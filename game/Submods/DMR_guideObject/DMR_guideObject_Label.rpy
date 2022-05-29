@@ -17,6 +17,7 @@ init python:
 
 label dmr_g_preStartLabel:
     # play_song(persistent.current_track) 播放开始约会前的音乐
+    # 顺便一提 如果想停止音乐 就是play_song(None)
     $ play_song(ReAlize_PianoVer_2, set_per = False)
     "总之, 欢迎你决定尝试一下DokiMonikaRework."
     "这个模组的目的就是为了与莫妮卡进行约会, 仅此而已"
@@ -67,7 +68,11 @@ label dmr_g_StartLabel:
     "你也可以添加fadein和fadeout让音乐切换更舒适, 比如..."
     $ play_song(ReAlize_PianoVer_2, set_per = False, fadein = 1, fadeout = 1)
     "关于monika的表情...如果你用1eua这种, 那么就会显示mas的风格"
-    "而如果你用原版的表情...是不行的! 我帮你测过了!"
+    "而如果你用原版的表情...要像这样"
+    show monika_vanlia 5a at t11
+    pause 2
+    show monika_vanlia 5b at t11
+    hide monika_vanlia
     hide nine_ball_a
     show nine_ball_b
     with dissolve
@@ -99,6 +104,13 @@ label dmr_g_StartLabel:
             m "啊哈哈, 好像有点过于激动了."
     "另外, 如果你想展示或者隐藏莫妮卡, 要记住展示时 需要加上at语句, 具体可以去找一下renpy教学, 不知道就写at t11即可."
     # 也可以看一下https://docs.dokimod.cn/pages/91995e/#添加角色立绘
+    "修改好感不允许使用MAS原版的修改好感度, 而要用..."
+    $ dmr_gainAff(10, dmr_global.Id)
+    $ dmr_loseAff(1, dmr_global.Id)
+    "dmr_global.Id是必填项, 填就完了"
+    # 本来设计不用填也可以...但是有bug 寄
+
+    
     hide nine_ball_b
     show miyako_cg
     with dissolve
@@ -106,6 +118,7 @@ label dmr_g_StartLabel:
     miyako "我们下次见喽"
     hide miyako_cg
 
+    # 如果你可以完成一个不错的约会话题编写, 那么你已经有一定的写DDLCmod的能力了
 
 label dmr_g_preEndLabel:
     # 这里是pre_EndLabel, 通常用于回到原太空教室的转场
