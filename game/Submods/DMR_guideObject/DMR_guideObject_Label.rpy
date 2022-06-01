@@ -1,19 +1,22 @@
 # 准备资源
-define miyako = "都"
+define my_sayer = "九条都"
+define my = DynamicCharacter('九条都', image='miyako', what_prefix='"', what_suffix='"', ctc="ctc", ctc_position="fixed")
 image miyako_cg = "Submods/DMR_guideObject/assets/ev103d.png"
 image nine_ball_a = "Submods/DMR_guideObject/assets/bg012a.png"
 image nine_ball_b = "Submods/DMR_guideObject/assets/bg012b.png"
 image nine_ball_c = "Submods/DMR_guideObject/assets/bg012c.png"
 image nine_ball_night = "Submods/DMR_guideObject/assets/bg011c.png"
-# 这种属于renpy原生的音乐播放方式 不推荐
-# 在编译时出问题了 干脆就别用了
-#music sound ReAlize_PianoVer = "Submods/DMR_guideObject/assets/ReAlize_PianoVer.mp3"
 
 # 建议使用这种方式定义音乐 不要忘了替换该死的反斜杠 -> .replace('\\','/')
 init python:
     ReAlize_PianoVer_2 = (renpy.config.basedir).replace('\\','/') + '/game/Submods/DMR_guideObject/assets/ReAlize_PianoVer.mp3'
     Eutopia = (renpy.config.basedir).replace('\\','/')  + '/game/Submods/DMR_guideObject/assets/Eutopia.mp3'
 
+# 定义角色表情
+image miyako a1 = im.Composite((960, 960), (0, 0), "DMR_guideObject/my1.png")
+image miyako a2 = im.Composite((960, 960), (0, 0), "DMR_guideObject/my2.png")
+
+# 准备资源结束-----------
 
 label dmr_g_preStartLabel:
     # play_song(persistent.current_track) 播放开始约会前的音乐
@@ -27,14 +30,14 @@ label dmr_g_preStartLabel:
     #$ HKBHideButtons()
     "直到切换场景完成之前, 这里的对话都是属于pre_StartLabel"
     "接下来就是切换场景, 暂时想不出更好的方法, 先这样用吧"
-    # 这两行代码是必须的 切换至MAS空房间, 用于场景切换
-    $ bg_change_info_moi = mas_changeBackground(dmr_empty, by_user=None, set_persistent=False)
-    call spaceroom(scene_change=None, dissolve_all=True, bg_change_info=bg_change_info_moi, force_exp=None)
     # 接下来 跳转到约会场景:)
     # fade为渐进/出 具体的可以看renpy文档
-
     # 隐藏莫妮卡 同样可以使用with语句
-    hide monika
+    
+    # 切换至空房间
+    $ bg_change_info_moi = mas_changeBackground(dmr_empty, by_user=None, set_persistent=False)
+    call spaceroom(scene_change=None, dissolve_all=True, bg_change_info=bg_change_info_moi, force_exp=None)
+    hide monika 
     show nine_ball_night with Fade(0.5,2,0.5,color="#000000")
     
 label dmr_g_StartLabel:
@@ -78,7 +81,9 @@ label dmr_g_StartLabel:
     with dissolve
     "也许你对dmr_setDateData()和smr_getDateDataKey()还不是很理解, 那我举个场景你看看"
     $ play_song(Eutopia, set_per=False)
-    miyako "你好, 欢迎光临, 请问要点些什么呢~"
+    show miyako a1 at t21
+    show monika_vanlia 1a at t22
+    my_sayer "你好, 欢迎光临, 请问要点些什么呢~"
     m "啊~等我问一下[player]"
     # 记录吃过的东西
     # 这里不提前写下面两行大概也是没问题的
@@ -96,12 +101,16 @@ label dmr_g_StartLabel:
                 # 如果你吃过帕菲, 则为True
                 m "九号球家的帕菲也是很好吃的哦, 下次点一下吧~"
             m "既然这样...{w=0.5}那我也要红茶~"
-            miyako "两份红茶是吗, 好的."
+            show miyako a2 at t21
+            my_sayer "两份红茶是吗, 好的."
         "帕菲!":
             $ dmr_setDateData('dmr_guideObject','eated_Pafi', True)
             m "[player], 我之前来到这个世界, 可是特意踩过点的~"
             m "九号球家的帕菲, 那可真的是真的是真的是很棒, 你也试一下."
             m "啊哈哈, 好像有点过于激动了."
+    hide miyako
+    hide monika_vanlia
+    with dissolve
     "另外, 如果你想展示或者隐藏莫妮卡, 要记住展示时 需要加上at语句, 具体可以去找一下renpy教学, 不知道就写at t11即可."
     # 也可以看一下https://docs.dokimod.cn/pages/91995e/#添加角色立绘
     "修改好感不允许使用MAS原版的修改好感度, 而要用..."
@@ -115,7 +124,7 @@ label dmr_g_StartLabel:
     show miyako_cg
     with dissolve
     # cg也是这样的 隐藏掉monika之后, 展示cg即可
-    miyako "我们下次见喽"
+    my_sayer "我们下次见喽"
     hide miyako_cg
 
     # 如果你可以完成一个不错的约会话题编写, 那么你已经有一定的写DDLCmod的能力了
@@ -125,7 +134,7 @@ label dmr_g_preEndLabel:
     # 目前会回到默认的房间 懒得研究回到之前的房间了 摸大鱼!
     $ bg_change_info_moi = mas_changeBackground(mas_background_def, set_persistent=False)
     call spaceroom(scene_change=None, dissolve_all=True, bg_change_info=bg_change_info_moi, force_exp=None)
-    show monika 1eua at t11
+    show monika 1eua with dissolve_scene
 
 
 label dmr_g_EndLabel:

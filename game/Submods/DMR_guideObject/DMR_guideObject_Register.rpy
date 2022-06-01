@@ -32,7 +32,14 @@ init -900 python:
         'pre_EndLabel':'dmr_g_preEndLabel',
         # 约会结束label
         # 回到太空教室后的对话
-        'EndLabel':'dmr_g_EndLabel'
+        'EndLabel':'dmr_g_EndLabel',
+        # 相册
+        # 用于展示约会中出现的CG
+        # 格式为'定义名称，展示名称'
+        'CGs':[
+            ["miyako_cg", "Cool喵都"]
+        ]
+            
     }
 
     # 添加到可用的约会列表
