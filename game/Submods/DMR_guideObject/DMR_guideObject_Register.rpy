@@ -4,7 +4,8 @@ init -990 python:
         name="DMR_guideObject",
         description="DMR 示例约会",
         version='0.0.2',
-        dependencies={'DokiMonikaReworkCore':('0.0.1','2.0.0')}
+        dependencies={'DokiMonikaReworkCore':('0.0.1','2.0.0')},
+        setting_pane="dmr_g_ruleinfo"
     )
     # dependencies 表示这个模组强制需要DMR作为前置模组
 
@@ -46,3 +47,16 @@ init -900 python:
     dmr_DateList.append(DMR_Test)
 
 ##################################################
+
+screen dmr_g_ruleinfo():
+    vbox:
+        xmaximum 800
+        xfill True
+        style_prefix "check"
+
+        textbutton ">版权声明":
+            ypos 1
+            selected False
+            action Show(screen = "dialog", message = dmr_g_ruletext, ok_action = Hide("dialog"))
+
+dmr_g_ruletext = "本作品内的素材来自于日本Palette品牌的Galgame作品‘9-nine’系列。\n本作品仅供学习用途，严禁以商业目的分发本子模组，请在下载后24小时内删除。\n本子模组内出现的所有非DDLC背景/立绘/音乐等素材均归Palette所有。"
