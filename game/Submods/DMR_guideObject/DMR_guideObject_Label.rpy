@@ -1,6 +1,6 @@
 # 准备资源
 define my_sayer = "九条都"
-define my = DynamicCharacter('九条都', image='miyako', what_prefix='"', what_suffix='"', ctc="ctc", ctc_position="fixed")
+define my = DynamicCharacter('my_sayer', image='miyako', what_prefix='"', what_suffix='"', ctc="ctc", ctc_position="fixed")
 image miyako_cg = "Submods/DMR_guideObject/assets/ev103d.png"
 image nine_ball_a = "Submods/DMR_guideObject/assets/bg012a.png"
 image nine_ball_b = "Submods/DMR_guideObject/assets/bg012b.png"
